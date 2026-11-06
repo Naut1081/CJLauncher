@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="CJ Launcher landing page for Minecraft Java Edition." />
+    <title>CJ Development</title>
+    <style>
+        :root {
+            --bg: #0d0d0f;
+            --text: #ffffff;
+            --panel: #f5f5f5;
+            --dark-panel: #1b1b1c;
+            --shadow: rgba(0, 0, 0, 0.7);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a, button {
+            font: inherit;
+        }
+
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: auto;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+
+        .skip-link:focus {
+            left: 1rem;
+            top: 1rem;
+            width: auto;
+            height: auto;
+            z-index: 50;
+            background: white;
+            color: black;
+            padding: 0.75rem 1rem;
+            border-radius: 999px;
+            text-decoration: none;
+        }
+
+        header {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            right: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .btn {
+            background: white;
+            color: black;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            font-family: sans-serif;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .btn:hover,
+        .btn:focus-visible {
+            background: #e0e0e0;
+            transform: scale(1.05);
+            outline: 3px solid #8ec5ff;
+            outline-offset: 3px;
+        }
+
+        .logo-top {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 30px;
+            font-weight: bold;
+            font-size: 24px;
+            color: white;
+            font-family: sans-serif;
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .text-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+        }
+
+        .dot-text {
+            font-size: clamp(2.5rem, 7vw, 7rem);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            position: relative;
+            color: white;
+        }
+
+        .dot-text::before {
+            content: attr(data-text);
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle, #ffffff 2px, transparent 2.5px);
+            background-size: 7px 7px;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            z-index: 1;
+            opacity: 0.45;
+        }
+
+        .dot-text::after {
+            content: attr(data-text);
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, #000000, #444444, #ffffff, #aaaaaa, #000000);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbowMove 3s linear infinite;
+            z-index: 2;
+            mask-image: radial-gradient(circle, black 2px, transparent 2.5px);
+            mask-size: 7px 7px;
+            -webkit-mask-image: radial-gradient(circle, black 2px, transparent 2.5px);
+            -webkit-mask-size: 7px 7px;
+        }
+
+        @keyframes rainbowMove {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .icon {
+            position: absolute;
+            box-shadow:
+                -15px 15px 25px rgba(0,0,0,0.9),
+                inset -5px -5px 15px rgba(0,0,0,0.4),
+                inset 5px 5px 15px rgba(255,255,255,1);
+            animation: float 6s ease-in-out infinite;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: sans-serif;
+            font-size: 12px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            padding: 10px;
+            background: #ffffff;
+        }
+
+        .icon-1 {
+            top: 20%;
+            left: 15%;
+            width: 120px;
+            height: 120px;
+            border-radius: 20px;
+            animation-delay: 0s;
+        }
+
+        .icon-2 {
+            top: 15%;
+            right: 15%;
+            width: 90px;
+            height: 140px;
+            border-radius: 15px;
+            animation-delay: 1.5s;
+        }
+
+        .icon-3 {
+            bottom: 15%;
+            left: 18%;
+            width: 140px;
+            height: 90px;
+            border-radius: 10px;
+            animation-delay: 2.5s;
+            transform: rotate(-15deg);
+        }
+
+        .icon-4 {
+            bottom: 20%;
+            right: 18%;
+            width: 130px;
+            height: 70px;
+            border-radius: 5px;
+            animation-delay: 0.8s;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(3deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        @keyframes float-tilted {
+            0% { transform: translateY(0px) rotate(-15deg); }
+            50% { transform: translateY(-25px) rotate(-12deg); }
+            100% { transform: translateY(0px) rotate(-15deg); }
+        }
+
+        .icon-3 {
+            animation-name: float-tilted;
+        }
+
+        @media (max-width: 900px) {
+            .icon {
+                display: none;
+            }
+
+            header {
+                left: 20px;
+                right: 20px;
+                top: 20px;
+            }
+
+            .logo-top {
+                top: 20px;
+                font-size: 20px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            .dot-text::after,
+            .icon {
+                animation: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header aria-label="Main navigation">
+        <a href="launcher.py" download="launcher.py" class="btn" aria-label="Download CJ Launcher script">Download CJ Launcher &darr;</a>
+
+        <div class="logo-top" aria-label="CJ brand">CJ</div>
+        <button type="button" class="btn" aria-label="Open menu">Menu &#9776;</button>
+    </header>
+
+    <main id="main-content" class="content-wrapper" aria-label="Main hero section">
+        <div class="text-block">
+            <div class="dot-text" data-text="WELCOME TO CJ" aria-label="Welcome to CJ">WELCOME TO CJ</div>
+            <div class="dot-text" data-text="DEVELOPMENT" aria-label="Development">DEVELOPMENT</div>
+        </div>
+    </main>
+
+    <div class="icon icon-1" aria-label="Console icon">CONSOLE</div>
+    <div class="icon icon-2" aria-label="Handheld icon">HANDHELD</div>
+    <div class="icon icon-3" aria-label="Cartridge icon">CARTRIDGE</div>
+    <div class="icon icon-4" aria-label="Tape icon">TAPE</div>
+</body>
+</html>
